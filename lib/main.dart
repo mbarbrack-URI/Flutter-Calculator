@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Simple Calculator',
+      title: 'Matthew Barbrack Simple Calculator',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -43,10 +43,15 @@ class _MyHomePageState extends State<MyHomePage> {
         _secondOperand = double.tryParse(_display) ?? 0;
         _display = _performOperation();
         _operation = '';
-      } else if (['+', '-', '*', '/'].contains(value)) {
+      } else if (['+', '-', '*', '/', '%'].contains(value)) {
         _firstOperand = double.tryParse(_display) ?? 0;
         _operation = value;
         _display = '';
+      } else if (value == '^2') {
+        _firstOperand = double.tryParse(_display) ?? 0;
+        _operation = value;
+        _display = _performOperation();
+        _operation = '';
       } else {
         _display += value;
       }
@@ -67,6 +72,12 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
       case '/':
         result = _firstOperand / _secondOperand;
+        break;
+      case '%':
+        result = _firstOperand % _secondOperand;
+        break;
+      case '^2':
+        result = _firstOperand * _firstOperand;
         break;
     }
     return result.toString();
@@ -99,6 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 '4', '5', '6', '*',
                 '1', '2', '3', '-',
                 'C', '0', '=', '+',
+                '%', '^2', 
               ].map((value) {
                 return GridTile(
                   child: ElevatedButton(
